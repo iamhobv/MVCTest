@@ -1,0 +1,73 @@
+﻿@model InswithDeptCrsViewModel
+@{
+    ViewData["Title"] = "EditIns";
+}
+
+<h1>EditIns</h1>
+
+
+<form method="post" action="/instructor/saveEdit/@Model.Id">
+    <div>
+        <label>Name</label>
+        <input class="form form-control mt-1 mb-3" name="Name" id="Name" value="@Model?.Name" />
+    </div>
+    <div>
+        <label>Salary</label>
+        <input class="form form-control mt-1 mb-3" name="Salary" id="Salary" value="@Model?.Salary" type="number" />
+    </div>
+    <div>
+        <label>Address</label>
+        <input class="form form-control mt-1 mb-3" name="Address" id="Address" value="@Model?.Address" />
+    </div>
+    <div>
+        <label>ImgUrl</label>
+        <input class="form form-control mt-1 mb-3" name="ImgUrl" id="ImgUrl" value="@Model?.ImgUrl" />
+    </div>
+    <div>
+        <label>Department</label>
+        <select class=" mt-1 mb-3 form form-control" id="DeptId" name="DeptId">
+            @foreach (Department dept in Model.Departments)
+            {
+                if (Model?.DeptId == dept.Id)
+                {
+
+                    <option value="@dept.Id" selected>@dept.Name</option>
+                }
+                else
+                {
+
+                    <option value="@dept.Id">@dept.Name</option>
+                } 
+            }
+
+        </select>
+    </div>
+    <div>
+        <label>Course</label>
+        <select class=" mt-1 mb-3 form form-control" id="CrsId" name="CrsId">
+
+            @foreach (Course crs in Model.Courses)
+            {
+                
+                    if (Model?.CrsId == crs.Id)
+                    {
+
+                        <option value="@crs.Id" selected>@crs.Name</option>
+                    }
+                    else
+                    {
+
+                        <option value="@crs.Id">@crs.Name</option>
+                    }
+                
+            }
+
+        </select>
+    </div>
+
+
+    <div class ="d-flex align-items-center justify-content-end">
+        <a href="/instructor/Index/1" class="btn btn-danger mt-4 me-2">Back To List</a>
+        <input type="submit" value="Save Changes" class="btn btn-success mt-4" />
+</div>
+</form>

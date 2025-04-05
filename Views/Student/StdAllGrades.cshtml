@@ -1,0 +1,35 @@
+﻿@model Trainee
+@{
+    ViewData["Title"] = "StdAllGrades";
+    SelectList stdList = new SelectList(ViewBag.std, "Id", "Name");
+}
+
+<h1 class="mb-3">Student All Grades</h1>
+<a asp-action="Index" asp-controller="Student" class="btn btn-info ">Back To List</a>
+
+<label class="d-block mt-2"> Students</label>
+<select asp-items="stdList" asp-for="Id"  class="form form-control" onchange="getAllGrades()">
+    <option value="0"> -- Choose Student -- </option>
+
+</select>
+
+
+
+
+<div id="resIsHere"></div>
+<script>
+    function getAllGrades(){
+        let stdID = $("#Id").val();
+        console.log(stdID);
+        $.ajax({
+           url:`/Student/GetStdAllGrades/${stdID}`,
+           success : function(res){
+               console.log(res);
+               $("#resIsHere").html(res);
+            
+           }
+       })
+
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>

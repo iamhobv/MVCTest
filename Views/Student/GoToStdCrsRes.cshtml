@@ -1,0 +1,105 @@
+﻿@model StudentWithCrs
+@{
+    ViewData["Title"] = "GoToStdCrsRes";
+    List<Trainee> std = (List<Trainee>)ViewData["StudentList"];
+    SelectList stdList = new SelectList(std, "Id", "Name");
+    
+
+}
+
+<h1>Student Result in Course</h1>
+
+<a asp-action="Index" asp-controller="Student" class="btn btn-warning ">Back To List</a>
+
+<form action="/Student/CheckResult" method="post">
+    <div>
+        <label >Traniee</label>
+    <select class="form form-control mb-4" asp-for="StdID" onchange="GetCourses()" name="StdID" id="StdID">
+            <option asp-for="0">
+                --Choose Trainee--
+            </option>
+
+            @foreach (Trainee trainee in ViewBag.StudentList)
+            {
+                if (trainee.Id != 1)
+                {
+                    <option value="@trainee.Id">
+                        @trainee.Name
+                    </option>
+                }
+
+        }
+    </select>
+    <span asp-validation-for="StdID"></span>
+</div>
+
+    <div>
+        <label >Course</label>
+    <select class="form form-control mb-4"  name="CrsID" id="CrsID">
+        <option asp-for="0"> --Choose Course-- </option>
+
+
+
+    </select>
+        <span asp-validation-for="CrsID"></span>
+
+</div>
+    <div asp-validation-summary="All" class="text-black"></div>
+
+
+@* <button type="submit" class="btn btn-secondary">Get Result</button> *@
+    <div class="btn btn-success" onclick="getRes()" id="getRes"> Get Result </div>
+    
+</form>
+
+<div id="disRes">
+
+</div>
+
+
+<script>
+    function GetCourses(){
+        $("#disRes").html("");
+        var stdId = $("#StdID").val();
+        console.log(stdId);
+          $("#CrsID").html(`<option asp-for="0"> --Choose Course-- </option>`);
+
+             $.ajax(
+            {
+                url: `/Student/GetCrsByStdID?StdId=${stdId}`,
+                success: function (result) {
+                    console.log(result);
+                    if(result.length == 0 ){
+                         $("#CrsID").append(`<option value="${-1}">this Student does not in any courses</option>`);
+                    }else{
+
+                    for (let course of result) {
+                        $("#CrsID").append(`<option value="${course.id}">${course.name}</option>`);
+                    }
+                    }
+                }
+            });
+        // console.log("crs");
+    }
+
+
+
+    function getRes(){
+         var stdId = $("#StdID").val();
+         var CrsID = $("#CrsID").val();
+         $("#disRes").html("");
+
+         $.ajax(
+        {
+            url: `/Student/CheckResult?StdID=${stdId}&CrsID=${CrsID}`,
+            success: function (result) {
+                console.log(result);
+                 $("#disRes").html(result);
+            }
+        });
+
+    }
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script> *@
+@* <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@

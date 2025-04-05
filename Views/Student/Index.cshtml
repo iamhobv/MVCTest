@@ -1,0 +1,46 @@
+﻿@model List<Trainee>
+@{
+    ViewData["Title"] = "Index";
+    // HttpContext httpContext = httpContext.Session.GetString("ayhaga");
+}
+@{
+    string a = Context.Session.GetString("ayhaga");
+}
+<h1>@a</h1>
+<h1>All Students</h1>
+<h2>
+    </h2>
+
+<a asp-controller="Student" asp-action="GoToStdCrsRes" class="btn btn-warning mb-3 mt-2">Get Student Grade in Course</a>
+<a asp-controller="Student" asp-action="GoTOStdAllGrades" class="btn btn-info mb-3 mt-2">Get Student all Grades</a>
+<table class="table table-striped-columns table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Depertment</th>
+            <th>Address</th>
+            <th>Grade</th>
+            <th>Img</th>
+            <th>Edit</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Trainee std in Model)
+        {
+            <tr>
+                <td> @std.Id </td>
+                <td> @std.Name </td>
+                <td> @std.Department.Name </td>
+                <td> @std.Address </td>
+                <td> @std.Grade </td>
+                <td> <img src="\img\@std.ImgUrl" alt="Alternate Text" style="width:70px" /> </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+

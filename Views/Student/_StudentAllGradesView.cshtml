@@ -1,0 +1,44 @@
+﻿@model dynamic
+
+@if (@Model.courses.Count != 0)
+{
+
+
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th >Course Name</th>
+                <th >Student Degree</th>
+                <th >Statues</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @for (int i = 0; i < Model.courses.Count; i++) 
+            { 
+                <tr>
+                   
+                    @if (@Model.crsRes[@Model.courses[i].Name] <= @Model.courses[i].MinDegree)
+                    {
+                        <td class="text-danger fw-bold">@Model.courses[i].Name</td>
+                        <td class="text-danger fw-bold">@Model.crsRes[@Model.courses[i].Name]</td>
+                        <td class="text-danger fw-bold">Failed</td>
+                    }
+                    else
+                    {
+                        <td class="text-success fw-bold">@Model.courses[i].Name</td>
+                        <td class="text-success fw-bold">@Model.crsRes[@Model.courses[i].Name]</td>
+                        <td class="text-success fw-bold">Successed</td>
+                        
+                    }
+                </tr> 
+        } 
+     
+    </tbody>
+</table>
+}else{
+    <h2 class="mt-5 text-center text-danger">This trainee has not any result</h2>
+}

@@ -1,0 +1,83 @@
+﻿@model CourseWithSearchVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_CoursesLayout";
+}
+
+ 
+<h1 class="text-white">All Courses</h1>
+<a href="/Course/AddNew" class=" btn btn-secondary">Add New Course</a>
+<input type="search" class="form-check form-control mt-3" name="seachVal" id="searchVal" placeholder="Search" value="@(Model.SearchText==null?"":Model.SearchText)" />
+
+<table class="table table-secondary w-100 mt-4">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Course Name</th>
+            <th>Department Name</th>
+            <th>Degree</th>
+            <th>MinDegree</th>
+            <th>Hours</th>
+            <th>Ins</th>
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{int index = 1; }
+        @foreach (Course crs in Model.Courses)
+        {
+
+            <tr>
+                <td>@index</td>
+                <td>@crs.Name</td>
+                <td>@crs.Department.Name</td>
+                <td>@crs.Degree</td>
+                <td>@crs.MinDegree</td>
+                <td>@crs.Hours</td>
+                <td>
+                    @foreach (Instructor ins in crs.Instructors)
+                    {
+                        <span class="overFlowText">@ins.Name</span>
+                    }
+
+                </td>
+                <td>
+                    <div class="btn btn-danger pointer-event deleteCrs @(crs.Id ==1? "disabled" : "")" id="deleteCrs2" data-id="@crs.Id" data-Name="@crs.Name" >Delete</div>
+                </td>
+
+            </tr>
+            index++;
+        }
+
+
+    </tbody>
+</table>
+
+<script>
+    let crsDeleteBtns = Array.from(document.getElementsByClassName("deleteCrs"));
+    crsDeleteBtns.forEach((crs, index) => {
+        let idVal = crs.getAttribute("data-id");
+        let nameVal = crs.getAttribute("data-Name");
+        crs.addEventListener("click",()=>{
+            let res = confirm(`Are You Sure to delete Course : ${nameVal}`);
+            console.log(`${res}`);
+            if(res){
+                location.href = `/course/DeleteCrs?delCrsId=${idVal}`;
+            }
+            else{
+                /**No Thing*/
+            }
+        })
+    }); 
+
+    let searchEle = document.getElementById("searchVal");
+    searchEle.addEventListener("keyup",(e)=>{
+        if(e.key==="Enter"){
+        let sVal =searchEle.value;
+      
+        location.href = `/course/Searching?searchText=${sVal}`;
+        }
+    });
+
+</script>

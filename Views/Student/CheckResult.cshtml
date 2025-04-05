@@ -1,0 +1,23 @@
+﻿@model StudentWithinCourseResult
+@{
+    ViewData["Title"] = "CheckResult";
+}
+
+@if(@Model.status){
+    @* <h1>@Model.StdName Grade in @Model.CrsName</h1> *@
+
+
+    <h2 class="mt-4"> @Model.StdName</h2>
+    <h2>@Model.CrsName</h2>
+    <h2>@Model.StdGrade</h2>
+    <h2 style="color:@Model.StdColor">@Model.statusString</h2>
+
+    @* <h2 style="color = @Model.StdColor">@Model.StdName</h2> *@
+}
+else
+{
+    <h1>No Data Matched</h1>
+}
+
+
+@* <a asp-action="GoToStdCrsRes" asp-controller="Student" class="btn btn-info">Back Get More Grade</a> *@

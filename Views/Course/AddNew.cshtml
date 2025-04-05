@@ -1,0 +1,68 @@
+﻿@model CourseWithDeptInsVM
+@{
+    ViewData["Title"] = "Add New Course";
+    SelectList DeptOptions = new SelectList(ViewBag.deptList, "Id", "Name");
+    SelectList InsOptions = new SelectList(ViewBag.insList, "Id", "Name");
+    Layout = "_CoursesLayout";
+}
+
+<h1 class="text-white text-start">Add New</h1>
+
+<form method="post" asp-action="SaveNewToDb" asp-controller="Course">
+
+    <div>
+        <label asp-for="Name" class="text-start"></label>
+        <input class="form form-control mb-4" asp-for="Name" />
+        @* <span asp-validation-for="Name"></span> *@
+    </div>
+     <div>
+        <label asp-for="Degree"></label>
+        <input class="form form-control mb-4" asp-for="Degree" />
+        @* <span asp-validation-for="Degree"></span> *@
+
+    </div>
+     <div>
+        <label asp-for="MinDegree"></label>
+        <input class="form form-control mb-4" asp-for="MinDegree" />
+        @* <span asp-validation-for="MinDegree"></span> *@
+
+    </div>
+    <div>
+        <label asp-for="Hours"></label>
+        <input class="form form-control mb-4" asp-for="Hours" />
+        @* <span asp-validation-for="Hours"></span> *@
+
+    </div>
+    <div>
+        <label asp-for="DeptId"></label>
+
+        <select asp-for="DeptId" asp-items="DeptOptions" class="form form-control mb-4">
+            <option value="0" >--Choose Department--</option>
+        </select>
+        @* <span asp-validation-for="DeptId"></span> *@
+
+    </div>
+    <div>
+        <label asp-for="Instructors"></label>
+
+        <select asp-for="Instructors" asp-items="InsOptions" class="form form-control mb-4" multiple>
+            <option value="0" disabled class="p-1 m-1">--Choose Instructors--</option>
+        </select>
+        @* <span asp-validation-for="Instructors"></span> *@
+
+    </div>
+    <div asp-validation-summary="All" class="text-black">
+
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end gap-2">
+        <input type="button" value="Cancel" class="btn btn-danger mb-4" onclick="history.back()" />
+        <input type="submit" value="Save" class="btn btn-success mb-4" />
+  </div>
+
+</form>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

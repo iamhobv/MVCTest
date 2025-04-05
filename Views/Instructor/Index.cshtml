@@ -1,0 +1,95 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Instructor Table</h1>
+<a href="/instructor/addnew" class=" btn btn-success mt-2 mb-4">Add New Instructor</a>
+
+<table class="table table-striped-columns table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Depertment</th>
+            <th>Salary</th>
+            <th>Address</th>
+            <th>Img</th>
+            <th>Edit</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Instructor ins in Model.insList)
+        {
+            <tr onclick="clickOnIns(@ins.Id)">
+                <td>@ins.Id</td>
+                <td>@ins.Name</td>
+                <td>@ins.Department.Name</td>
+                <td>@ins.Salary</td>
+                <td>@ins.Address</td>
+                <td>
+                    <img src="\img\@ins.ImgUrl" alt="Alternate Text" style="width:70px" />
+                </td>
+                <td>
+                    <a href="/instructor/EditIns/@ins.Id" class="btn btn-outline-info">Edit</a>
+
+                </td>
+            </tr>
+
+        } 
+
+
+    </tbody>
+</table>
+
+
+<p  onclick="navigate('p')" class="btn btn-outline-dark m-0">previous</p>
+@for (int i = 1; i <= (Model.insCount/5)+1 ; i++)
+{
+    if (Model.navId==i)
+    {
+        <a href="~/instructor/index/@i" class="btn btn-secondary">@i</a>
+
+    }else
+    {
+        
+    <a href="~/instructor/index/@i" class="btn btn-outline-secondary">@i</a>
+    }
+}
+<p onclick="navigate('n')" class="btn btn-outline-dark m-0">next</p>
+
+<script>
+    function clickOnIns(idf){
+        location.href=`/instructor/details/${idf}`;
+    }
+
+    function navigate(item){
+
+        let url = location.href;
+        let arr = url.split('/');
+        let pageNo = arr[arr.length-1];
+        console.log(pageNo);
+
+
+      if(item == 'p'){
+          pageNo--;
+          if(pageNo==0){
+              pageNo = @(Model.insCount/5)+1;
+          }
+           location.href=`/instructor/index/${pageNo}`;
+
+      }
+      else  if(item == 'n'){
+          pageNo++;
+          if(pageNo==@((Model.insCount / 5)+1)+1){
+              pageNo = 1;
+          }
+          location.href=`/instructor/index/${pageNo}`;
+
+          
+
+      }
+    }
+</script>

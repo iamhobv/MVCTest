@@ -1,0 +1,21 @@
+﻿@model Instructor
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Instructor Details</h1>
+<div onclick="history.back()"><i class="fa-solid fa-arrow-left" style="font-size:24px; color:black;cursor:pointer"></i></div>
+    <div class="card" style="width: 18rem;">
+  
+    <img src="\img\@Model.ImgUrl" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h3 class="card-title"> @Model.Name</h3>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Salary : $@Model.Salary</li>
+        <li class="list-group-item">Address : @Model.Address</li>
+        <li class="list-group-item">Department : @Model.Department.Name</li>
+        <li class="list-group-item">Course : @Model.Course.Name</li>
+     
+    </ul>    
+</div>
